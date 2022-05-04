@@ -13,6 +13,9 @@
   "author": "Kent Adrian Sato",
   "license": "MIT",
   "devDependencies": {
+    "@types/better-queue": "^3.8.6",
+    "@types/express": "^5.0.1",
+    "@types/pg": "^8.11.14",
     "@typescript-eslint/eslint-plugin": "^7.18.0",
     "@typescript-eslint/parser": "^7.18.0",
     "concurrently": "^9.1.2",
@@ -33,6 +36,8 @@
     "better-queue": "^3.8.12",
     "dataloader": "^2.2.3",
     "express": "^5.1.0",
+    "pg": "^8.15.6",
+    "pg-format": "^1.0.4",
     "sqlite3": "^5.1.7"
   }
 }
