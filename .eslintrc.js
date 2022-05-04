@@ -4,7 +4,7 @@ module.exports = {
         project: './tsconfig.json',
         tsconfigRootDir: __dirname,
     },
-    plugins: ['@typescript-eslint', 'import'],
+    plugins: ['@typescript-eslint', 'import', 'prettier'],
     extends: [
         'airbnb-base',
         'plugin:@typescript-eslint/recommended',
@@ -36,5 +36,6 @@ module.exports = {
                 peerDependencies: false,
             },
         ],
+        'prettier/prettier': 'error',
     },
 };
