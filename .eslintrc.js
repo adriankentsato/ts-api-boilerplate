@@ -19,7 +19,8 @@ module.exports = {
         },
     },
     rules: {
-        'no-console': 'off',
+        "max-len": ["error", { "code": 120, "ignoreUrls": true, "ignoreStrings": true }],
+        'no-console': ['error', { 'allow': ['warn', 'error', 'info'] }],
         'import/extensions': [
             'error',
             'ignorePackages',
