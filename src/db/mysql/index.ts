@@ -11,10 +11,10 @@ import CreateQueue, { IQueue } from '../queue';
 import BaseDatabase from '../base';
 
 const Queue = CreateQueue(
-    '[PostgreSQL]',
+    '[MySQL]',
     (connectionString) =>
         new DataSource({
-            type: 'postgres',
+            type: 'mysql',
             url: connectionString,
             synchronize: false,
             ssl: { rejectUnauthorized: false },
@@ -23,7 +23,7 @@ const Queue = CreateQueue(
     (conn) => conn.query('SELECT 1'),
 );
 
-export default class PostgreSqlDatabase extends BaseDatabase {
+export default class MySqlDatabase extends BaseDatabase {
     // eslint-disable-next-line class-methods-use-this
     protected get queue(): IQueue {
         return Queue;
