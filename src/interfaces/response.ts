@@ -9,7 +9,7 @@
 import { Writable } from 'node:stream';
 import { IGenericType } from './generictype';
 
-export interface IReponse {
+export interface IResponse {
     code: number;
     headers: IGenericType;
     message: string;
