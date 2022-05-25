@@ -6,8 +6,8 @@
  */
 
 /** */
-import { IRequest } from './request';
-import { IResponse } from './response';
+import { IRequest } from '../types/request';
+import { IResponse } from '../types/response';
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 type NextFunction = (err?: Error | any) => void | Promise<any> | any;
