@@ -8,4 +8,4 @@
 /** */
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export type Nullable<T> = T | null | undefined;
+export type TNullable<T> = T | null | undefined;

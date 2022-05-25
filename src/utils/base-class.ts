@@ -7,7 +7,7 @@
 
 /** */
 
-import { Class } from '../interfaces/types/class';
+import { TClass } from '../interfaces/types/class';
 
 export default class BaseClass {
     // eslint-disable-next-line @typescript-eslint/ban-types
@@ -17,11 +17,11 @@ export default class BaseClass {
         this.components = new Map();
     }
 
-    public setComponent<T>(cls: Class<T>, instance: T) {
+    public setComponent<T>(cls: TClass<T>, instance: T) {
         this.components.set(cls, instance);
     }
 
-    public getComponent<T>(cls: Class<T>) {
+    public getComponent<T>(cls: TClass<T>) {
         const c = this.components.get(cls);
 
         if (c == null) {

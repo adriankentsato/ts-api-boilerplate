@@ -12,14 +12,15 @@ import { ExpressFunction } from '../interfaces/functions/express';
 import { Handler } from '../interfaces/functions/handler';
 import ErrorResponse from '../errors/error-response';
 import { IResponse } from '../interfaces/types/response';
+import { TResult } from '../interfaces/types/result';
 
 /** This uses the express-validator to check for the data valididty. */
 export default function validate(mw: ExpressFunction): Handler {
     return (req) =>
-        new Promise<void>((resolve, reject) => {
+        new Promise<TResult>((resolve) => {
             console.info('[Validation Check] Checking for the validity of your data.');
             mw(req, {} as unknown as IResponse, (error) => {
-                if (error != null) reject(error);
+                if (error != null) resolve({ ok: false, error });
                 else {
                     const x = validationResult(req);
 
@@ -28,11 +29,11 @@ export default function validate(mw: ExpressFunction): Handler {
 
                         console.error('[Validation Error]', err.msg);
 
-                        reject(new ErrorResponse('BAD REQUEST', 'Bad Request', 400));
+                        resolve({ ok: false, error: new ErrorResponse('BAD REQUEST', 'Bad Request', 400) });
                     } else {
                         console.info('[Validation Succeeded] Validation okay.');
 
-                        resolve();
+                        resolve({ ok: true, value: 'Validation succeeded.' });
                     }
                 }
             });

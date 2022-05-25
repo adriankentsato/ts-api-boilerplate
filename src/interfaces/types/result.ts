@@ -2,10 +2,10 @@
  * MIT License
  *
  * Author: Kent Adrian Sato
- * Date: May 7, 2023
+ * Date: May 24, 2023
  */
 
 /** */
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export type TClass<T> = new (...args: any[]) => T;
+export type TResult<T = any, E = Error> = { ok: true; value: T } | { ok: false; error: E };
