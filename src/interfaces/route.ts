@@ -1,4 +1,4 @@
-import { Handler } from './handler';
+import { Handler } from './functions/handler';
 
 export type Method = 'get' | 'post' | 'patch' | 'delete';
 

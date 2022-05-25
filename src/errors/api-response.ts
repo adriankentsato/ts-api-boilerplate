@@ -6,7 +6,7 @@
  */
 
 /** */
-import { IGenericType } from '../interfaces/generictype';
+import { IGenericType } from '../interfaces/types/generictype';
 
 export default class ApiReponse extends Error {
     public readonly data: string;

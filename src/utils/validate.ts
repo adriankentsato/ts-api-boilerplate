@@ -8,10 +8,10 @@
 /** */
 
 import { validationResult } from 'express-validator';
-import { ExpressFunction } from '../interfaces/express';
-import { Handler } from '../interfaces/handler';
+import { ExpressFunction } from '../interfaces/functions/express';
+import { Handler } from '../interfaces/functions/handler';
 import ErrorResponse from '../errors/error-response';
-import { IResponse } from '../interfaces/response';
+import { IResponse } from '../interfaces/types/response';
 
 /** This uses the express-validator to check for the data valididty. */
 export default function validate(mw: ExpressFunction): Handler {
