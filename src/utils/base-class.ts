@@ -8,6 +8,7 @@
 /** */
 
 import { TClass } from '../interfaces/types/class';
+import { TNullable } from '../interfaces/types/nullable';
 
 export default class BaseClass {
     // eslint-disable-next-line @typescript-eslint/ban-types
@@ -17,11 +18,11 @@ export default class BaseClass {
         this.components = new Map();
     }
 
-    public setComponent<T>(_cls: TClass<T>, _instance: T) {
+    protected setComponent<T>(_cls: TClass<T>, _instance: T) {
         this.components.set(_cls, _instance);
     }
 
-    public getComponent<T>(_cls: TClass<T>) {
+    protected getComponent<T>(_cls: TClass<T>): TNullable<T> {
         const c = this.components.get(_cls);
 
         if (c == null) {
@@ -29,5 +30,13 @@ export default class BaseClass {
         }
 
         return c as T;
+    }
+
+    public SetComponent<T>(_cls: TClass<T>, _instance: T) {
+        this.setComponent(_cls, _instance);
+    }
+
+    public GetComponent<T>(_cls: TClass<T>) {
+        return this.getComponent(_cls);
     }
 }

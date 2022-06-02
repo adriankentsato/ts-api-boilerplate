@@ -9,11 +9,11 @@
 import { IGenericType } from '../interfaces/types/generictype';
 
 export default class ApiReponse extends Error {
-    public readonly data: string;
+    public readonly Data: string;
 
-    public readonly statusCode: number;
+    public readonly StatusCode: number;
 
-    public readonly headers: IGenericType;
+    public readonly Headers: IGenericType;
 
     public constructor(
         _data: IGenericType = {},
@@ -22,8 +22,8 @@ export default class ApiReponse extends Error {
     ) {
         super();
 
-        this.data = JSON.stringify(_data);
-        this.statusCode = _statusCode;
-        this.headers = _headers;
+        this.Data = JSON.stringify(_data);
+        this.StatusCode = _statusCode;
+        this.Headers = _headers;
     }
 }

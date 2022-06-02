@@ -10,7 +10,7 @@ import { IGenericType } from '../interfaces/types/generictype';
 import ApiReponse from './api-response';
 
 export default class SuccessResponse extends ApiReponse {
-    public constructor(_data: IGenericType, _statusCode: number = 200) {
+    constructor(_data: IGenericType, _statusCode: number = 200) {
         super(
             {
                 response: _data,

@@ -9,7 +9,7 @@
 import ApiReponse from './api-response';
 
 export default class ErrorResponse extends ApiReponse {
-    public constructor(_code: string, _message: string, _statusCode: number = 500) {
+    constructor(_code: string, _message: string, _statusCode: number = 500) {
         super(
             {
                 response: {},
