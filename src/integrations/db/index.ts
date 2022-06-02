@@ -19,8 +19,8 @@ export default class Database extends BaseClass {
         super();
 
         this.sources = new Map();
-        this.queue = new Queue(async (param: IQueueParams, cb) => {
-            const { dbType, connString } = param;
+        this.queue = new Queue(async (_param: IQueueParams, cb) => {
+            const { dbType, connString } = _param;
             const factory = getDbFactory(dbType);
             const mapKey = `${dbType} - ${connString}`;
 
@@ -48,13 +48,13 @@ export default class Database extends BaseClass {
         });
     }
 
-    async getConnection(dbType: TDbType, connString: string): Promise<TResult<QueryRunner>> {
+    async getConnection(_dbType: TDbType, _connString: string): Promise<TResult<QueryRunner>> {
         return new Promise((resolve) => {
-            this.queue.push({ connString, dbType }, async (err, ds) => {
+            this.queue.push({ connString: _connString, dbType: _dbType }, async (err, ds) => {
                 if (err) resolve({ ok: false, error: err });
                 else {
                     const conn = ds.createQueryRunner();
-                    const factory = getDbFactory(dbType);
+                    const factory = getDbFactory(_dbType);
 
                     try {
                         await conn.connect();

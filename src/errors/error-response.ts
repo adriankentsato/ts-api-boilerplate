@@ -9,16 +9,16 @@
 import ApiReponse from './api-response';
 
 export default class ErrorResponse extends ApiReponse {
-    public constructor(errCode: string, message: string, statusCode: number = 500) {
+    public constructor(_code: string, _message: string, _statusCode: number = 500) {
         super(
             {
                 response: {},
                 error: {
-                    code: errCode,
-                    message,
+                    code: _code,
+                    message: _message,
                 },
             },
-            statusCode,
+            _statusCode,
         );
     }
 }

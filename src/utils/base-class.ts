@@ -17,12 +17,12 @@ export default class BaseClass {
         this.components = new Map();
     }
 
-    public setComponent<T>(cls: TClass<T>, instance: T) {
-        this.components.set(cls, instance);
+    public setComponent<T>(_cls: TClass<T>, _instance: T) {
+        this.components.set(_cls, _instance);
     }
 
-    public getComponent<T>(cls: TClass<T>) {
-        const c = this.components.get(cls);
+    public getComponent<T>(_cls: TClass<T>) {
+        const c = this.components.get(_cls);
 
         if (c == null) {
             return null;

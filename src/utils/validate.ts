@@ -15,14 +15,14 @@ import { IResponse } from '../interfaces/types/response';
 import { TResult } from '../interfaces/types/result';
 
 /** This uses the express-validator to check for the data valididty. */
-export default function validate(mw: ExpressFunction): Handler {
-    return (req) =>
+export default function validate(_mw: ExpressFunction): Handler {
+    return (_req) =>
         new Promise<TResult>((resolve) => {
             console.info('[Validation Check] Checking for the validity of your data.');
-            mw(req, {} as unknown as IResponse, (error) => {
+            _mw(_req, {} as unknown as IResponse, (error) => {
                 if (error != null) resolve({ ok: false, error });
                 else {
-                    const x = validationResult(req);
+                    const x = validationResult(_req);
 
                     if (!x.isEmpty()) {
                         const err = x.array()[0];

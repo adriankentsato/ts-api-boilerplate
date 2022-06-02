@@ -16,14 +16,14 @@ export default class ApiReponse extends Error {
     public readonly headers: IGenericType;
 
     public constructor(
-        data: IGenericType = {},
-        statusCode: number = 200,
-        headers: IGenericType = { 'Content-Type': 'application/json' },
+        _data: IGenericType = {},
+        _statusCode: number = 200,
+        _headers: IGenericType = { 'Content-Type': 'application/json' },
     ) {
         super();
 
-        this.data = JSON.stringify(data);
-        this.statusCode = statusCode;
-        this.headers = headers;
+        this.data = JSON.stringify(_data);
+        this.statusCode = _statusCode;
+        this.headers = _headers;
     }
 }
