@@ -19,13 +19,13 @@
 	"TypeScript Header": {
     "prefix": "tsfile",
     "body": [
-      "/**",
+      "/*!",
       " * MIT License",
 	  " *",
       " * Author: Kent Adrian Sato",
       " * Date: ${CURRENT_MONTH_NAME} ${CURRENT_DATE}, ${CURRENT_YEAR}",
       " */",
-      "",
+      "/** */",
       "console.log('Hello, world!');"
     ],
     "description": "Insert a standard TypeScript file header"
