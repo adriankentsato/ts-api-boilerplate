@@ -18,7 +18,7 @@ import { TResult } from '../interfaces/types/result';
 export default function validate(_mw: ExpressFunction): Handler {
     return (_req) =>
         new Promise<TResult>((resolve) => {
-            console.info('[Validation Check] Checking for the validity of your data.');
+            console.info('[Validation] Checking for the validity of your data.');
             _mw(_req, {} as unknown as IResponse, (error) => {
                 if (error != null) resolve({ ok: false, error });
                 else {
@@ -27,11 +27,11 @@ export default function validate(_mw: ExpressFunction): Handler {
                     if (!x.isEmpty()) {
                         const err = x.array()[0];
 
-                        console.error('[Validation Error]', err.msg);
+                        console.error('[Validation] Error: ', err.msg);
 
                         resolve({ ok: false, error: new ErrorResponse('BAD REQUEST', 'Bad Request', 400) });
                     } else {
-                        console.info('[Validation Succeeded] Validation okay.');
+                        console.info('[Validation] Validation okay.');
 
                         resolve({ ok: true, value: 'Validation succeeded.' });
                     }
