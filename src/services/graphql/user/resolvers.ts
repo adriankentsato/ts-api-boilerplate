@@ -15,10 +15,11 @@ export const GQL_RESOLVERS = {
         users: () => [],
         user: () =>
             new User({
-                id: 1,
+                id: '1',
                 firstName: 'Hello',
                 lastName: 'World',
                 email: 'hello@world.com',
+                password: '',
             }),
     },
     User: {
