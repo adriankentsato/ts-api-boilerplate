@@ -8,4 +8,4 @@
 /** */
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export type Promisable<T = any> = T | Promise<T>;
+export type TPromisable<T = any> = T | Promise<T>;

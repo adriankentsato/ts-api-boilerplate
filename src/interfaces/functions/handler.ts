@@ -6,9 +6,9 @@
  */
 
 /** */
-import { Promisable } from './promisable';
+import { TPromisable } from './promisable';
 import { IRequest } from '../types/request';
 import { IResponse } from '../types/response';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export type Handler = (request: IRequest) => Promisable<void | IResponse | any>;
+export type Handler = (request: IRequest) => TPromisable<void | IResponse | any>;

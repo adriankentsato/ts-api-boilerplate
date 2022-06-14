@@ -10,7 +10,7 @@
 import { randomUUID as uuid } from 'node:crypto';
 
 import BaseClass from './base-class';
-import { Promisable } from '../interfaces/functions/promisable';
+import { TPromisable } from '../interfaces/functions/promisable';
 import { TResult } from '../interfaces/types/result';
 import SuccessResponse from '../errors/success-response';
 import { TFunction } from '../interfaces/types/function';
@@ -23,7 +23,7 @@ export default class Controller extends BaseClass {
     protected readonly processId: string;
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    protected middlewares: TFunction<Promisable<TResult>>[];
+    protected middlewares: TFunction<TPromisable<TResult>>[];
 
     constructor(processId: string = uuid()) {
         super();
@@ -33,7 +33,7 @@ export default class Controller extends BaseClass {
     }
 
     // eslint-disable-next-line class-methods-use-this, @typescript-eslint/no-unused-vars
-    protected handler(_req: IRequest): Promisable<TResult<SuccessResponse>> {
+    protected handler(_req: IRequest): TPromisable<TResult<SuccessResponse>> {
         return {
             ok: false,
             error: new Error('Unimplemented method.'),
@@ -41,7 +41,7 @@ export default class Controller extends BaseClass {
     }
 
     // eslint-disable-next-line class-methods-use-this
-    protected clean(): Promisable<TResult<null>> {
+    protected clean(): TPromisable<TResult<null>> {
         return { ok: true, value: null };
     }
 
