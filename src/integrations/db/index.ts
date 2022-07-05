@@ -48,7 +48,7 @@ export default class Database extends BaseClass {
         });
     }
 
-    async getConnection(_dbType: TDbType, _connString: string): Promise<TResult<QueryRunner>> {
+    async GetConnection(_dbType: TDbType, _connString: string): Promise<TResult<QueryRunner>> {
         return new Promise((resolve) => {
             this.queue.push({ connString: _connString, dbType: _dbType }, async (err, ds) => {
                 if (err) resolve({ ok: false, error: err });

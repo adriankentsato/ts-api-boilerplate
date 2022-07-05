@@ -63,7 +63,7 @@ export default class UserService extends BaseClass {
                 let rows;
 
                 // Let's get a connection first before doing anything.
-                conn = await db.getConnection('postgres', this.connectionString);
+                conn = await db.GetConnection('postgres', this.connectionString);
 
                 if (!conn.ok) {
                     const { ok, error } = conn;
