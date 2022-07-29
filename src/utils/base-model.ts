@@ -11,14 +11,23 @@ interface ISerialize<T> {
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export default function CreateModel<T extends Record<string, any>, R extends Record<string, any>>(
-    mapper: Readonly<IObjectMap<string>>,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    mapper: Readonly<IObjectMap<string | ((data: R) => any)>>,
 ) {
     return class {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         constructor(data: R) {
             Object.keys(mapper).forEach((key) => {
                 Object.defineProperty(this, key, {
-                    get: () => data[mapper[key]],
+                    get: () => {
+                        const m = mapper[key];
+
+                        if (typeof m === 'string') {
+                            return data[m];
+                        }
+
+                        return m(data);
+                    },
                     enumerable: true,
                     configurable: true,
                 });
