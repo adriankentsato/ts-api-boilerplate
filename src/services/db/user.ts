@@ -12,7 +12,7 @@ import { SelectQueryBuilder } from 'typeorm';
 import User, { TUserField, USER_FIELDS } from '../../models/user';
 import { IObjectKeysMap, IObjectMap } from '../../interfaces/types/object-map';
 import GetModelFieldList from '../../utils/get-model-field-list';
-import BaseClass from '../../utils/base-class';
+import BaseClass from '../../bases/base-class';
 import Database from '../../integrations/db';
 import { TResult } from '../../interfaces/types/result';
 import { IGenericType } from '../../interfaces/types/generictype';

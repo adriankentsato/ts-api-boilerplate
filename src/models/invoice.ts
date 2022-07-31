@@ -1,6 +1,6 @@
 import { IGenericType } from '../interfaces/types/generictype';
-import { IObjectKeysMap } from '../interfaces/types/object-map';
-import CreateModel from '../utils/base-model';
+import CreateModel from '../bases/base-model';
+import DefaultClass from '../bases/default-class';
 
 type TInvoice = IObjectKeysMap<['id', 'invoiceDate', 'userId', 'customerId', 'data'], string>;
 type TDbInvoice = IObjectKeysMap<['id', 'invDate', 'userId', 'custId'], string>;

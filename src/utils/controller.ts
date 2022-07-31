@@ -9,7 +9,7 @@
 
 import { randomUUID as uuid } from 'node:crypto';
 
-import BaseClass from './base-class';
+import BaseClass from '../bases/base-class';
 import { TPromisable } from '../interfaces/functions/promisable';
 import { TResult } from '../interfaces/types/result';
 import SuccessResponse from '../errors/success-response';

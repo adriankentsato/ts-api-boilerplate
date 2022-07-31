@@ -1,6 +1,6 @@
 import { DataSource, QueryRunner } from 'typeorm';
 import Queue from 'better-queue';
-import BaseClass from '../../utils/base-class';
+import BaseClass from '../../bases/base-class';
 import { TDbType } from '../../interfaces/types/db-types';
 import getDbFactory from './factories';
 import { TResult } from '../../interfaces/types/result';
