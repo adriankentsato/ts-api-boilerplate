@@ -1,64 +1,123 @@
 import { IGenericType } from '../interfaces/types/generictype';
-import { IObjectMap } from '../interfaces/types/object-map';
+import { IObjectKeysMap, IObjectMap } from '../interfaces/types/object-map';
+import { TVersionedSchema } from '../interfaces/types/versioned-schema';
 import DefaultClass from './default-class';
 
-interface IModel<T, R, N> {
-    new (data: R, fieldMap: N): T;
+interface IModel<Input, Output, Mappers> {
+    new (data: Input, fieldMap: Mappers): Output;
 }
 
 interface ISerialize<T> {
     toJSON(): Readonly<T>;
 }
 
-export default function CreateModel<
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    T extends Record<string, any>,
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    R extends Record<string, any>,
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    E extends IModel<ISerialize<any>, any, any> = typeof DefaultClass,
-    N extends Record<string, Record<string, string>> = IObjectMap,
->(
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    mapper: Readonly<IObjectMap<string | ((data: R, fieldMap: N) => any)>>,
-    ext?: E,
-) {
-    const Parent = ext ?? DefaultClass;
+type TMapper<
+    Input extends Record<string, unknown>,
+    Output extends Record<string, unknown>,
+    Mappers extends Record<string, unknown>> = {
+    [K in keyof Output]: (keyof Input) | ((data: Input, mappers: Mappers) => Output[K]) | ({ val: keyof Input; def: Output[K] });
+};
 
-    return class extends Parent {
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        constructor(data: R, fieldMap: N) {
-            super(data, fieldMap);
+type TOutputMap<
+    T extends TVersionedSchema<string, Record<string, unknown>>,
+    Output extends Record<string, unknown>,
+    Mappers extends Record<string, unknown>> = {
+    [K in T['version']]: TMapper<Extract<T, { version: K }>['schema'], Output, Mappers>;
+};
 
-            Object.keys(mapper).forEach((key) => {
-                let m = mapper[key];
+export default abstract class Model {
+    static Create<
+        Input extends TVersionedSchema<string, Record<string, unknown>>,
+        Output extends Record<string, unknown>,
+        Mappers extends Record<string, Record<string, unknown>> = IObjectMap,
+        Parent extends IModel<ISerialize<unknown>, unknown, unknown> = typeof DefaultClass,
+        Sym extends Symbol = Symbol,
+    >(outMap: TOutputMap<Input, Output, Mappers>, parent?: Parent, sym?: Sym) {
+        const Parent = parent ?? DefaultClass;
 
-                if (typeof m === 'function') {
-                    m = m(data, fieldMap);
-                } else {
-                    m = data[m];
+        const Child = class extends Parent {
+
+            constructor(data: Input, mappers: Mappers, s?: Symbol) {
+                let exp: TMapper<Input['schema'], Output, Mappers>;
+
+                super(data, mappers, (Parent as IGenericType).sym);
+
+                // This checks for abstraction.
+                if (sym && s != sym) {
+                    throw new Error('Cannot instantiate this class.');
                 }
 
-                Object.defineProperty(this, key, {
-                    get: () => m,
-                    enumerable: true,
-                    configurable: true,
+                if (!data.version) {
+                    throw new Error('Malformed input, cannot instantiate.');
+                }
+
+                exp = (outMap as IGenericType)[data.version];
+
+                // Check if version is supported.
+                if (!exp) {
+                    throw new Error('Version not supported.');
+                }
+
+                Object.keys(exp).forEach((key) => {
+                    let m;
+                    
+                    m = exp[key];
+
+                    if (typeof m === 'function') {
+                        m = m(exp, mappers);
+                    } else if (typeof m === 'string') {
+                        m = exp[m];
+                    } else {
+                        const n = m as IGenericType;
+
+                        m = exp[n.val] || n.def;
+                    }
+
+                    Object.defineProperty(this, key, {
+                        get: () => m,
+                        enumerable: true,
+                        configurable: true,
+                    });
                 });
-            });
-        }
+            }
 
-        public toJSON() {
-            const ret: IGenericType = {
-                ...super.toJSON(),
-            };
+            toJSON() {
+                const ret: IGenericType = {
+                    ...super.toJSON(),
+                };
 
-            Object.keys(mapper).forEach((key) => {
-                ret[key] = (this as IGenericType)[key];
-            });
+                Object.keys((outMap as IGenericType)[Object.keys(outMap)[0]]).forEach((k) => {
+                    ret[k] = (this as IGenericType)[k];
+                });
 
-            return ret;
-        }
-        // NOTE: Instancetype will get all of the fields defined by the parent class
-        // https://www.typescriptlang.org/docs/handbook/utility-types.html#instancetypetype
-    } as IModel<Readonly<T> & ISerialize<T> & InstanceType<E>, R, N>;
+                return ret;
+            }
+        } as IModel<Input, Readonly<Output> & ISerialize<Output> & InstanceType<Parent>, Mappers>;
+
+        (Child as IGenericType).sym = sym;
+
+        return Child;
+    }
 }
+
+type TItemRest = TVersionedSchema<'rest', IObjectKeysMap<['number', 'id', 'name'], string>>;
+type TItemDB = TVersionedSchema<'db', IObjectKeysMap<['_id', '_number', '_name'], string>>;
+type TItemInputs = TItemRest | TItemDB;
+
+const Item = Model.Create<TItemInputs, { dummy: string }>({
+    db: {
+        dummy: (data) => data._id,
+    },
+    rest: {
+        dummy: (data) => data.id,
+    },
+});
+
+const item = new Item({
+    version: 'rest',
+    schema: {
+        id: '',
+        name: '',
+        number: '',
+    },
+}, {});
