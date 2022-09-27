@@ -1,5 +1,5 @@
 import { IGenericType } from '../interfaces/types/generictype';
-import { IObjectKeysMap, IObjectMap } from '../interfaces/types/object-map';
+import { IObjectMap } from '../interfaces/types/object-map';
 import { TVersionedSchema } from '../interfaces/types/versioned-schema';
 import DefaultClass from './default-class';
 
@@ -99,25 +99,3 @@ export default abstract class Model {
         return Child;
     }
 }
-
-type TItemRest = TVersionedSchema<'rest', IObjectKeysMap<['number', 'id', 'name'], string>>;
-type TItemDB = TVersionedSchema<'db', IObjectKeysMap<['_id', '_number', '_name'], string>>;
-type TItemInputs = TItemRest | TItemDB;
-
-const Item = Model.Create<TItemInputs, { dummy: string }>({
-    db: {
-        dummy: (data) => data._id,
-    },
-    rest: {
-        dummy: (data) => data.id,
-    },
-});
-
-const item = new Item({
-    version: 'rest',
-    schema: {
-        id: '',
-        name: '',
-        number: '',
-    },
-}, {});
