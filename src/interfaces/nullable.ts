@@ -8,8 +8,4 @@
 /** */
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export type IGenericType<T = any> = {
-    [K in keyof T]: T[K];
-} & {
-    [key: string]: IGenericType;
-};
+export type Nullable<T> = T | null | undefined;
