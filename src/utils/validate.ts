@@ -5,18 +5,20 @@
  * Date: May 7, 2023
  */
 
+/** */
+
 import { validationResult } from 'express-validator';
 import { ExpressFunction } from '../interfaces/express';
 import { Handler } from '../interfaces/handler';
 import ErrorResponse from '../errors/error-response';
+import { IResponse } from '../interfaces/response';
 
 /** This uses the express-validator to check for the data valididty. */
 export default function validate(mw: ExpressFunction): Handler {
     return (req) =>
         new Promise<void>((resolve, reject) => {
             console.info('[Validation Check] Checking for the validity of your data.');
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            mw(req, {} as any, (error) => {
+            mw(req, {} as unknown as IResponse, (error) => {
                 if (error != null) reject(error);
                 else {
                     const x = validationResult(req);
