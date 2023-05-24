@@ -6,7 +6,7 @@
  */
 
 /** */
-import { IGenericType } from '../interfaces/generictype';
+import { IGenericType } from '../interfaces/types/generictype';
 import ApiReponse from './api-response';
 
 export default class SuccessResponse extends ApiReponse {

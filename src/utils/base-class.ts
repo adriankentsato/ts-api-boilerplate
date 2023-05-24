@@ -7,7 +7,7 @@
 
 /** */
 
-import { Class } from '../interfaces/class';
+import { Class } from '../interfaces/types/class';
 
 export default class BaseClass {
     // eslint-disable-next-line @typescript-eslint/ban-types
